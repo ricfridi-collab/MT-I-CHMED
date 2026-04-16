@@ -1,0 +1,527 @@
+/* 1. الإعدادات العامة والألوان المتناغمة */
+:root {
+    --bg-main: #120b2e;
+    --side-bar-bg: #0d0821;
+    --accent-color: #00f2ff;
+    --card-bg: #1e144a;
+    --text-color: #e0def4;
+    --success: #00ff88;
+    --danger: #ff4757;       
+    --ticker-bg: #1a103d;    
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --paper-bg: #ffffff;
+    --paper-text: #222222;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', sans-serif;
+}
+
+body {
+    background: var(--bg-main);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow: hidden; 
+    height: 100vh;
+}
+
+/* 2. الهيكل التنظيمي */
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.side-bar {
+    width: 70px;
+    background: var(--side-bar-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-left: 1px solid rgba(0, 242, 255, 0.1);
+    padding: 20px 0;
+    flex-shrink: 0;
+    z-index: 100;
+}
+
+.nav-brand {
+    font-weight: 900;
+    color: var(--accent-color);
+    font-size: 1.8rem;
+    margin-bottom: 40px;
+    text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+}
+
+.nav-item {
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: var(--transition);
+}
+
+.nav-item.active {
+    opacity: 1;
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+/* 3. منطقة العرض */
+.main-content, .quiz-view {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 4. كروت الدروس (القائمة) */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse; /* لوضع الأيقونة في اليمين */
+    padding: 18px;
+    border: 1px solid rgba(0, 242, 255, 0.05);
+    cursor: pointer;
+    transition: var(--transition);
+    min-height: 80px;
+}
+
+.card:active {
+    transform: scale(0.97);
+    border-color: var(--accent-color);
+}
+
+.card-icon {
+    width: 55px;
+    height: 55px;
+    background: rgba(0, 242, 255, 0.1);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-left: auto; 
+    flex-shrink: 0;
+    order: 2;
+}
+
+.card-info {
+    order: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    margin-right: 15px;
+}
+
+.card-info h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.2;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.card-info span {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    line-height: 1.2;
+}
+
+/* 4.1 تنسيق خاص بأيقونة الامتحان */
+.card-exam {
+    background: linear-gradient(135deg, #2b2b2b 0%, #1e144a 100%);
+    border: 2px solid rgba(255,255,255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.exam-special {
+    background: #ffffff;
+    color: #000;
+    border-radius: 8px;
+    width: 50px;
+    height: 60px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.card-exam .card-info h3 {
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* 5. واجهة الاختبار */
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.back-btn {
+    background: rgba(123, 97, 255, 0.1);
+    border: 1px solid rgba(0, 242, 255, 0.2);
+    color: var(--accent-color);
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.back-btn:active {
+    background: var(--accent-color);
+    color: var(--bg-main);
+}
+
+.score-circle {
+    width: 70px;
+    height: 70px;
+    border: 3px solid var(--accent-color);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--side-bar-bg);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+}
+
+.score-circle hr {
+    width: 40%;
+    border: 0;
+    border-top: 2px solid var(--accent-color);
+    margin: 3px 0;
+}
+
+#current-score {
+    font-size: 1.3rem;
+    color: var(--accent-color);
+    font-weight: 900;
+}
+
+/* --- تنسيق المدخلات --- */
+#userInput {
+    width: 100%;
+    padding: 18px;
+    background: var(--side-bar-bg);
+    border: 2px solid rgba(0, 242, 255, 0.1);
+    border-radius: 15px;
+    color: white;
+    font-size: 1.4rem;
+    text-align: center;
+    margin: 20px 0;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#userInput:focus {
+    border-color: var(--accent-color);
+}
+
+.action-btn {
+    width: 100%;
+    padding: 18px;
+    background: var(--accent-color);
+    color: var(--bg-main);
+    border: none;
+    border-radius: 15px;
+    font-weight: 900;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 242, 255, 0.2);
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+
+.action-btn:active {
+    transform: scale(0.98);
+}
+
+#feedback {
+    margin-top: 20px;
+    font-weight: bold;
+    min-height: 25px;
+}
+
+/* 6. تنسيقات ورقة الامتحان */
+.exam-paper {
+    background: var(--paper-bg);
+    color: var(--paper-text);
+    padding: 30px 20px;
+    border-radius: 5px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: right;
+    direction: rtl;
+}
+
+.exam-paper-header {
+    text-align: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.exam-paper-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #000;
+}
+
+.exam-paper-header p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.exam-question {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #ccc;
+}
+
+.exam-question:last-child {
+    border-bottom: none;
+}
+
+.q-label {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.q-text {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.paper-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    font-size: 1rem;
+    direction: ltr; 
+    text-align: left; 
+    background: #f9f9f9;
+    color: #333;
+    box-sizing: border-box;
+}
+
+.paper-input:focus {
+    outline: 2px solid #007bff;
+    background: #fff;
+}
+
+.submit-btn {
+    background: #000;
+    color: #fff;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.submit-btn:hover {
+    background: #333;
+}
+
+.result-box {
+    background: #f0f8ff;
+    border: 2px solid #007bff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.result-score {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #007bff;
+    margin: 10px 0;
+}
+
+.correct-answer {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.wrong-answer {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+/* 7. الشريط الإعلاني */
+.ticker {
+    background: var(--ticker-bg);
+    color: var(--accent-color);
+    border-bottom: 1px solid rgba(0, 242, 255, 0.1);
+    font-size: 0.9rem;
+    padding: 10px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.ticker-text {
+    display: inline-block;
+    animation: move 20s linear infinite;
+}
+
+@keyframes move {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* 8. الفوتر وشاشة التفعيل */
+.footer {
+    position: fixed;
+    bottom: 8px;
+    right: 85px;
+    font-size: 0.6rem;
+    color: var(--accent-color);
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.activation-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-main);
+    z-index: 99999; 
+    display: flex; /* مرئي افتراضياً */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.activation-container {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+    border: 1px solid rgba(0, 242, 255, 0.1);
+}
+
+.logo-lock {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.activation-container h2 {
+    color: var(--accent-color);
+    margin-bottom: 10px;
+}
+
+.activation-container p {
+    opacity: 0.7;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+#activation-code {
+    width: 100%;
+    padding: 15px;
+    background: var(--bg-main);
+    border: 2px solid rgba(0, 242, 255, 0.2);
+    border-radius: 12px;
+    color: var(--accent-color);
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: monospace;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#activation-code:focus {
+    border-color: var(--accent-color);
+}
+
+#activate-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--accent-color);
+    color: var(--bg-main);
+    border: none;
+    border-radius: 12px;
+    font-weight: 900;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    box-sizing: border-box;
+}
+
+#activate-btn:disabled {
+    background: #555;
+    cursor: not-allowed;
+}
+
+.msg {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    min-height: 20px;
+    line-height: 1.4;
+}
+
+/* Spinner */
+.spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    margin: 0 auto 10px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* الاستجابة للهواتف */
+@media (max-width: 450px) {
+    .main-content, .quiz-view { padding: 15px; }
+    .side-bar { width: 65px; }
+    .card-info h3 { font-size: 1rem; }
+    .exam-paper { padding: 20px 15px; }
+}
